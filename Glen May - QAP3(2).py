@@ -4,13 +4,13 @@
 
 import datetime
 
-# Constants to be changed by service provider.
+# Constants to be changed by service provider if required.
 HST = 0.15  # Harmonized sales tax
 TRANSFEE = 0.01  # Standard transaction fee per sale
 LUXTAX = 0.016  # Luxury tax on sale price above $20,000
 moneySet = set("1234567890.")  # Allowable characters for dollar-value inputs
 
-# Inputs required to calculate
+# Inputs required to calculate financing rates and purchase cost
 while True:
     while True:
         try:
@@ -151,8 +151,17 @@ while True:
             print("Entry must be 16 characters.")
         else:
             break
-    print("")
-
+    while True:
+        custCredExp = input("Customer Credit Card expiry date: ")
+        if custCredExp == "":
+            print("Entry cannot be blank. ")
+        elif custCredExp.isdigit() == False:
+            print("Entry must only contain numbers. ")
+        elif len(custCredExp) != 4:
+            print("Entry must be four digits. ")
+        else:
+            break
+            
     # Calculate customer billing including fees and taxes.
     tradeDiff = sellPrice - tradeIn
     tradeDiffDsp = "${:,.2f}".format(tradeDiff)
@@ -173,6 +182,7 @@ while True:
 
     # Display customer payment plan options and input customer selection.
     while True:
+        print("")
         print("# Years   # Payments    Financing Fee   Total Price    Monthly Payment")
         print("----------------------------------------------------------------------")
         for payPlan in range(1, 5):
